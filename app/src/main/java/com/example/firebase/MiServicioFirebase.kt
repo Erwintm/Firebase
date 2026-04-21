@@ -21,11 +21,11 @@ class MiServicioFirebase : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
 
-        // 1. Log para confirmar que llegó
+        // log
         remoteMessage.notification?.let {
             Log.d("FCM_MENSAJE", "Título: ${it.title} - Cuerpo: ${it.body}")
 
-            // 2. Llamar a la función que crea la notificación visual
+            //  LlamaS a la función que crea la notificación visual
             sendNotification(it.title, it.body)
         }
     }
@@ -38,18 +38,18 @@ class MiServicioFirebase : FirebaseMessagingService() {
 
         val channelId = "canal_notificaciones_default"
 
-        // 3. Crear el constructor de la notificación
+        //  Crear el constructor de la notificación
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(android.R.drawable.ic_dialog_info) // Icono que saldrá arriba
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(title)
             .setContentText(messageBody)
             .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_HIGH) // Para que salga el banner
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // 4. Crear el canal (Solo necesario para Android 8.0 o superior)
+        // Crear el canal
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(channelId,
                 "Notificaciones de Firebase",
@@ -57,7 +57,7 @@ class MiServicioFirebase : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        // 5. Mostrar la notificación
+        // Mostrar la notificación
         notificationManager.notify(0, notificationBuilder.build())
     }
 }

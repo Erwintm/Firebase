@@ -23,7 +23,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : ComponentActivity() {
 
-    // 1. Manejador para la respuesta del usuario al permiso de notificaciones
+    // Respuest a persmiso
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -38,16 +38,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // 2. Pedir permiso de notificaciones (Android 13+)
+        // Pedir permisoos jsjs
         askNotificationPermission()
 
-        // 3. Obtener e imprimir el TOKEN actual para copiarlo al Servidor C#
+        // Obtner el token
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FCM_TOKEN", "Fallo al obtener el token", task.exception)
                 return@addOnCompleteListener
             }
-            // Este es el token que debes pegar en tu proyecto de Visual Studio
+            // Token
             val token = task.result
             Log.d("FCM_TOKEN", "EL_TOKEN_NUEVO: $token")
         }
